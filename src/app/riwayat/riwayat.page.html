@@ -1,25 +1,18 @@
-<ion-header translucent>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" icon="arrow-back" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Riwayat</ion-title>
-  </ion-toolbar>
-</ion-header>
-
 <ion-content class="ion-padding riwayat-page">
 
   <h2 class="title">Riwayat Antrian</h2>
 
-  <ion-list *ngIf="riwayatList.length > 0">
+  <ion-list *ngIf="riwayatList.length > 0" class="animated-list">
     <ion-item *ngFor="let item of riwayatList">
-      <ion-icon name="document-text-outline" slot="start"></ion-icon>
+      <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
       <ion-label>
         <h3>{{ item.poli }}</h3>
         <p>{{ item.tanggal }} - {{ item.jam }}</p>
         <small>Diambil: {{ item.waktuAmbil | date:'short' }}</small>
       </ion-label>
-      <ion-badge slot="end" color="success">Selesai</ion-badge>
+      <ion-badge slot="end" color="success">
+        Selesai
+      </ion-badge>
     </ion-item>
   </ion-list>
 

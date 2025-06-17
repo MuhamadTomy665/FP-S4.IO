@@ -1,0 +1,137 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-title>Profil</ion-title>
+    <ion-buttons slot="end">
+      <!-- Tombol Edit -->
+      <ion-button (click)="toggleEdit()">
+        <ion-icon [name]="editing ? 'close' : 'create-outline'"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding profil-page">
+
+  <!-- Foto Profil -->
+  <div class="profile-pic-container">
+    <img
+      [src]="foto || 'assets/logo-rs.png'"
+      alt="Foto Profil"
+      class="profile-pic"
+    />
+
+    <div *ngIf="editing" class="upload-wrapper">
+      <label for="foto-upload" class="upload-label">
+        <ion-icon name="camera-outline"></ion-icon>
+        Ganti Foto
+      </label>
+      <input
+        type="file"
+        accept="image/*"
+        id="foto-upload"
+        (change)="onFotoSelected($event)"
+        hidden
+      />
+    </div>
+  </div>
+
+  <!-- Data Profil -->
+  <ion-list>
+    <ion-item>
+      <ion-label position="stacked">Nama Lengkap</ion-label>
+      <ion-input
+        [(ngModel)]="nama"
+        [readonly]="!editing"
+        placeholder="Nama lengkap"
+      ></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">NIK</ion-label>
+      <ion-input [value]="nik" readonly></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">No. HP</ion-label>
+      <ion-input
+        [(ngModel)]="noHp"
+        [readonly]="!editing"
+        placeholder="08xxxx"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+
+  <!-- Tombol Simpan -->
+  <ion-button
+    *ngIf="editing"
+    expand="block"
+    color="success"
+    shape="round"
+    (click)="simpanPerubahan()"
+  >
+    Simpan Perubahan
+  </ion-button>
+
+  <!-- Form Ganti Password -->
+  <ion-list *ngIf="editing" class="password-section">
+    <ion-item>
+      <ion-label position="stacked">Password Lama</ion-label>
+      <ion-input
+        [type]="showPasswordLama ? 'text' : 'password'"
+        [(ngModel)]="passwordLama"
+      ></ion-input>
+      <ion-icon
+        slot="end"
+        [name]="showPasswordLama ? 'eye-off-outline' : 'eye-outline'"
+        (click)="showPasswordLama = !showPasswordLama"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Password Baru</ion-label>
+      <ion-input
+        [type]="showPasswordBaru ? 'text' : 'password'"
+        [(ngModel)]="passwordBaru"
+      ></ion-input>
+      <ion-icon
+        slot="end"
+        [name]="showPasswordBaru ? 'eye-off-outline' : 'eye-outline'"
+        (click)="showPasswordBaru = !showPasswordBaru"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-item>
+      <ion-label position="stacked">Konfirmasi Password Baru</ion-label>
+      <ion-input
+        [type]="showPasswordKonfirmasi ? 'text' : 'password'"
+        [(ngModel)]="konfirmasiPassword"
+      ></ion-input>
+      <ion-icon
+        slot="end"
+        [name]="showPasswordKonfirmasi ? 'eye-off-outline' : 'eye-outline'"
+        (click)="showPasswordKonfirmasi = !showPasswordKonfirmasi"
+      ></ion-icon>
+    </ion-item>
+
+    <ion-button
+      expand="block"
+      shape="round"
+      color="medium"
+      (click)="gantiPassword()"
+    >
+      Ubah Password
+    </ion-button>
+  </ion-list>
+
+  <!-- Tombol Logout -->
+  <ion-button
+    *ngIf="!editing"
+    expand="block"
+    color="danger"
+    shape="round"
+    (click)="logout()"
+  >
+    Logout
+  </ion-button>
+
+</ion-content>

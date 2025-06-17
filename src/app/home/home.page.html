@@ -1,56 +1,24 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>Home</ion-title>
-    <ion-buttons slot="end">
-      <ion-button (click)="goToRiwayat()">
-        <ion-icon name="time-outline"></ion-icon>
-      </ion-button>
-    </ion-buttons>
-  </ion-toolbar>
-</ion-header>
+<ion-content class="home-content">
 
-<ion-content class="ion-padding">
-  <!-- Header Greeting -->
-  <div class="header-container">
-    <div class="text">
-      <h2>Halo, {{ userName }}</h2>
-      <p>{{ greeting }}</p>
-      <p>Apa yang sedang kamu cari?</p>
-    </div>
-    <img src="assets/doctor.svg" alt="Doctor" />
+  <!-- Greeting -->
+  <div class="greeting-container">
+    <h2 class="greeting">Hai, {{ userName }} 👋</h2>
+    <p class="welcome">Selamat datang di <strong>Rumah Sakit Pada Sembuh</strong></p>
   </div>
 
-  <!-- Search bar -->
-  <ion-searchbar
-    [(ngModel)]="searchTerm"
-    (ionInput)="filterServices()"
-    placeholder="Temukan layanan kesehatan"
-  ></ion-searchbar>
-
-  <!-- Grid Menu -->
-  <div class="grid-container">
-    <div
-      *ngFor="let service of filteredServices"
-      class="card"
-      [ngClass]="service.color"
-      (click)="goToDetail(service.route)"
-    >
-      <ion-icon [name]="service.icon"></ion-icon>
-      <h3>{{ service.title }}</h3>
-      <p>{{ service.subtitle }}</p>
-    </div>
-
-    <!-- No Result -->
-    <div *ngIf="filteredServices.length === 0" class="not-found">
-      <ion-icon name="search-outline" size="large"></ion-icon>
-      <p>Tidak ada layanan ditemukan untuk "<strong>{{ searchTerm }}</strong>"</p>
+  <!-- Info Rumah Sakit -->
+  <div class="info-card">
+    <ion-icon name="location-outline"></ion-icon>
+    <div>
+      <h4>Jl. Sehat No. 10, Jakarta</h4>
+      <p>Senin - Sabtu, 08:00 - 17:00</p>
     </div>
   </div>
 
-  <!-- CTA Button -->
-  <div class="cta-container">
-    <ion-button expand="block" shape="round" (click)="startAntrian()" class="cta-button">
-      Ambil Antrian Sekarang
-    </ion-button>
+  <!-- Highlight Info -->
+  <div class="highlight">
+    <ion-icon name="information-circle-outline"></ion-icon>
+    <p>Pastikan kamu sudah mengambil antrian sebelum datang ke rumah sakit ya!</p>
   </div>
+
 </ion-content>

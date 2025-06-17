@@ -48,7 +48,7 @@ export class LoginPage implements OnInit {
         localStorage.setItem('user', JSON.stringify(res.data)); // bukan res.user
 
         setTimeout(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/tabs']);
         }, 300);
       },
       error: (err) => {

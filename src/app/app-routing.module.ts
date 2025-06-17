@@ -36,17 +36,22 @@ const routes: Routes = [
     loadChildren: () => import('./riwayat/riwayat.module').then(m => m.RiwayatPageModule)
   },
   {
-    path: 'daftar-poli',
-    loadChildren: () => import('./daftar-poli/daftar-poli.module').then(m => m.DaftarPoliPageModule)
-  },
-  {
-    path: 'daftar-dokter',
-    loadChildren: () => import('./daftar-dokter/daftar-dokter.module').then(m => m.DaftarDokterPageModule)
-  },
-  {
     path: 'barcode',
     loadComponent: () => import('./barcode/barcode.page').then(m => m.BarcodePage)
+  },
+  {
+    path: 'tabs',
+    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+  },
+  {
+    path: 'pencarian',
+    loadChildren: () => import('./pencarian/pencarian.module').then( m => m.PencarianPageModule)
+  },
+  {
+    path: 'profil',
+    loadChildren: () => import('./profil/profil.module').then( m => m.ProfilPageModule)
   }
+
 ];
 
 @NgModule({
