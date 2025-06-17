@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { IonicModule, IonAccordionGroup, ToastController } from '@ionic/angular';
@@ -12,13 +12,13 @@ import { ApiService } from '../services/api.service';
   templateUrl: './beranda.page.html',
   styleUrls: ['./beranda.page.scss'],
 })
-export class BerandaPage {
+export class BerandaPage implements OnInit {
   @ViewChild('accordionGroup', { static: false }) accordionGroup!: IonAccordionGroup;
 
-  poliList: string[] = ['Poli Umum', 'Poli Gigi', 'Poli Anak'];
+  poliList: { id: number; nama_poli: string }[] = [];
   timeList: string[] = ['08:00', '09:00', '10:00', '13:00', '14:00'];
 
-  selectedPoli = '';
+  selectedPoli: number | null = null;
   selectedDate = '';
   selectedTime = '';
 
@@ -27,6 +27,22 @@ export class BerandaPage {
     private router: Router,
     private api: ApiService
   ) {}
+
+  ngOnInit() {
+    this.loadPoli();
+  }
+
+  loadPoli() {
+    this.api.get('/poli').subscribe({
+      next: (res: any) => {
+        this.poliList = res; // ✅ Tidak pakai res.data karena API return array langsung
+      },
+      error: (err) => {
+        console.error('Gagal ambil data poli:', err);
+        this.showToast('❌ Gagal memuat data poli', 'danger');
+      }
+    });
+  }
 
   onPoliSelected() {
     if (this.selectedPoli) {
@@ -70,17 +86,12 @@ export class BerandaPage {
 
     console.log('Data antrian yang dikirim:', dataAntrian);
 
-    // ✅ GUNAKAN ENDPOINT YANG BENAR UNTUK SIMPAN ANTRIAN
     this.api.post('/antrian', dataAntrian).subscribe({
       next: (res: any) => {
         this.showToast('✅ Antrian berhasil disimpan ke server!', 'success');
-
-        // Simpan data ke localStorage
         localStorage.setItem('barcode', res.barcode);
         localStorage.setItem('kode_antrian', res.kode);
         localStorage.setItem('antrian', JSON.stringify(res.data));
-
-        // Arahkan ke halaman barcode
         setTimeout(() => this.router.navigate(['/barcode']), 1000);
       },
       error: (err) => {

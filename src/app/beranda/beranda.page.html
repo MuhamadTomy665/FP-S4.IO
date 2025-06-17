@@ -20,8 +20,8 @@
       <div class="ion-padding" slot="content">
         <ion-radio-group [(ngModel)]="selectedPoli" (ionChange)="onPoliSelected()">
           <ion-item *ngFor="let poli of poliList">
-            <ion-label style="color: black;">{{ poli }}</ion-label>
-            <ion-radio slot="start" [value]="poli"></ion-radio>
+            <ion-label style="color: black;">{{ poli.nama_poli }}</ion-label>
+            <ion-radio slot="start" [value]="poli.id"></ion-radio>
           </ion-item>
         </ion-radio-group>
       </div>
@@ -64,7 +64,6 @@
 
   </ion-accordion-group>
 
-  <!-- Submit Button -->
   <ion-button
     expand="block"
     shape="round"
