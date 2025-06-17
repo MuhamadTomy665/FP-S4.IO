@@ -1,0 +1,77 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" icon="arrow-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Ambil Antrian</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding beranda-page">
+  <h2 class="title">Pendaftaran Antrian</h2>
+
+  <ion-accordion-group #accordionGroup value="poli" class="accordion-wrapper">
+
+    <!-- Poli -->
+    <ion-accordion value="poli">
+      <ion-item slot="header">
+        <ion-label style="color: black;">Pilih Poli</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-radio-group [(ngModel)]="selectedPoli" (ionChange)="onPoliSelected()">
+          <ion-item *ngFor="let poli of poliList">
+            <ion-label style="color: black;">{{ poli }}</ion-label>
+            <ion-radio slot="start" [value]="poli"></ion-radio>
+          </ion-item>
+        </ion-radio-group>
+      </div>
+    </ion-accordion>
+
+    <!-- Tanggal -->
+    <ion-accordion value="tanggal">
+      <ion-item slot="header">
+        <ion-label style="color: black;">Pilih Tanggal</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <ion-datetime
+          presentation="date"
+          [(ngModel)]="selectedDate"
+          (ionChange)="onDateSelected()"
+        ></ion-datetime>
+      </div>
+    </ion-accordion>
+
+    <!-- Jam -->
+    <ion-accordion value="jam">
+      <ion-item slot="header">
+        <ion-label style="color: black;">Pilih Jam</ion-label>
+      </ion-item>
+      <div class="ion-padding" slot="content">
+        <div class="chip-wrapper">
+          <ion-button
+            *ngFor="let jam of timeList"
+            size="small"
+            shape="round"
+            [fill]="selectedTime === jam ? 'solid' : 'outline'"
+            color="success"
+            (click)="selectedTime = jam"
+          >
+            {{ jam }}
+          </ion-button>
+        </div>
+      </div>
+    </ion-accordion>
+
+  </ion-accordion-group>
+
+  <!-- Submit Button -->
+  <ion-button
+    expand="block"
+    shape="round"
+    color="success"
+    (click)="ambilAntrian()"
+    class="btn-ambil"
+  >
+    Ambil Antrian
+  </ion-button>
+</ion-content>

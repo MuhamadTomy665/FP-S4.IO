@@ -1,0 +1,25 @@
+<ion-header translucent>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/home" icon="arrow-back" text=""></ion-back-button>
+    </ion-buttons>
+    <ion-title>Antrian</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="ion-padding antrian-page">
+  <h2 class="title">Nomor Antrian</h2>
+
+  <div class="antrian-box">
+    <p class="nama">{{ nama }}</p>
+    <p class="nomor">{{ nomorAntrian }}</p>
+    <p class="poli">Poli: {{ poli }}</p>
+    <p class="waktu">{{ tanggal }} - {{ jam }}</p>
+  </div>
+
+  <div class="qr-section" *ngIf="barcode">
+    <img [src]="barcode" alt="Barcode" style="max-width: 100%; height: auto; margin-top: 20px;" />
+    <p class="kode">Kode: {{ kode }}</p>
+    <p class="hint">Tunjukkan barcode ini ke petugas saat tiba</p>
+  </div>
+</ion-content>

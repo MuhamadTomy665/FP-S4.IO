@@ -1,0 +1,47 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Daftar Poli</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content class="daftar-poli-page">
+
+  <!-- Jika tidak memilih, tampilkan list -->
+  <ng-container *ngIf="!selectedPoli; else detailPoli">
+    <ion-list *ngIf="poliList.length > 0; else kosong">
+      <ion-item *ngFor="let poli of poliList" (click)="lihatDetail(poli.id)" lines="inset">
+        <ion-label class="poli-nama" style="color: black;">
+          {{ poli.nama_poli }}
+        </ion-label>
+      </ion-item>
+    </ion-list>
+  </ng-container>
+
+  <!-- Template kosong -->
+  <ng-template #kosong>
+    <ion-text color="medium">
+      <p class="ion-padding">Belum ada data poli.</p>
+    </ion-text>
+  </ng-template>
+
+  <!-- Detail poli -->
+  <ng-template #detailPoli>
+    <ion-card class="poli-card">
+      <ion-card-header>
+        <ion-card-title>{{ selectedPoli.nama_poli }}</ion-card-title>
+      </ion-card-header>
+      <ion-card-content>
+        <p>Hari: {{ selectedPoli.hari }}</p>
+        <p>Jam: {{ selectedPoli.jam_mulai }} - {{ selectedPoli.jam_selesai }}</p>
+        <p>Dokter: {{ selectedPoli.dokter }}</p>
+      </ion-card-content>
+    </ion-card>
+
+    <!-- Tombol Daftar Antrian -->
+    <ion-button expand="block" color="success" (click)="daftarAntrian()">Ambil Antrian Sekarang</ion-button>
+
+    <!-- Tombol Kembali -->
+    <ion-button expand="block" color="medium" (click)="kembaliKeList()">Kembali</ion-button>
+  </ng-template>
+
+</ion-content>

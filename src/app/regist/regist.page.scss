@@ -1,0 +1,77 @@
+.regist-page {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff; // Tambahan: pastikan background putih
+  color: #000; // Tambahan: pastikan teks default hitam
+
+  ion-input, input {
+    color: #000 !important; // Tambahan: pastikan teks terlihat
+    caret-color: #000;
+  }
+
+  .regist-container {
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+  }
+
+  .logo {
+    width: 100px;
+    margin: 0 auto 20px;
+  }
+
+  .title {
+    font-size: 22px;
+    font-weight: 700;
+    color: #2e7d32;
+    margin-bottom: 6px;
+  }
+
+  .subtitle {
+    font-size: 14px;
+    color: #666;
+    margin-bottom: 24px;
+  }
+
+  ion-item {
+    margin-bottom: 16px;
+    border-radius: 12px;
+    --background: #ffffff;
+    --padding-start: 12px;
+    --color: #000; // Tambahan: pastikan teks ion-item juga terlihat
+  }
+
+  .toggle-password {
+    font-size: 22px;
+    color: #888;
+    cursor: pointer;
+  }
+
+  .regist-btn {
+    margin-top: 10px;
+    font-weight: 600;
+    border-radius: 20px;
+    --box-shadow: 0 4px 12px rgba(0, 128, 0, 0.2);
+  }
+
+  .error-msg,
+  .success-msg {
+    margin-top: 16px;
+    font-size: 14px;
+  }
+
+  .login-note {
+    font-size: 13px;
+    margin-top: 24px;
+    color: #444;
+
+    a {
+      color: #3880ff;
+      text-decoration: none;
+      font-weight: 500;
+    }
+  }
+}

@@ -1,0 +1,50 @@
+.daftar-dokter-page {
+  .page-title {
+    font-size: 22px;
+    font-weight: bold;
+    text-align: center;
+    color: #2e7d32;
+    margin-bottom: 20px;
+  }
+
+  .dokter-card {
+    border-radius: 14px;
+    box-shadow: 0 4px 8px rgba(76, 175, 80, 0.08);
+    margin-bottom: 16px;
+
+    ion-card-header {
+      background-color: #f1f8e9;
+      border-bottom: 1px solid #c5e1a5;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+    }
+
+    ion-card-title {
+      font-size: 18px;
+      font-weight: 700;
+      color: #1b5e20;
+    }
+
+    ion-card-subtitle {
+      font-size: 14px;
+      color: #4caf50;
+    }
+
+    ion-card-content {
+      font-size: 14px;
+      color: #444;
+      display: flex;
+      align-items: center;
+
+      .icon-jadwal {
+        font-size: 18px;
+        color: #4caf50;
+        margin-right: 6px;
+      }
+    }
+  }
+
+  ion-back-button {
+    --color: #2e7d32;
+  }
+}

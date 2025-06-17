@@ -1,0 +1,52 @@
+.antrian-page {
+  text-align: center;
+
+  .title {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 20px 0;
+    color: #000000;
+  }
+
+  .antrian-box {
+    background: #e0f7fa;
+    padding: 20px;
+    border-radius: 14px;
+    margin-bottom: 24px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+    .nama,
+    .poli,
+    .waktu {
+      font-size: 16px;
+      margin: 6px 0;
+    }
+
+    .nomor {
+      font-size: 36px;
+      font-weight: bold;
+      color: #000000;
+      margin: 12px 0;
+    }
+  }
+
+  .qr-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 16px;
+
+    qrcode {
+      margin-bottom: 12px;
+    }
+
+    .hint {
+      font-size: 13px;
+      color: #777;
+    }
+  }
+
+  ion-back-button {
+    --color: #333;
+  }
+}

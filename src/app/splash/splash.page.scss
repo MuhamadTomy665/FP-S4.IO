@@ -1,0 +1,25 @@
+.splash-screen {
+  --background: #50f87a;
+  height: 100%;
+  width: 100%;
+  display: flex;
+  justify-content: center;    // Tengah horizontal
+  align-items: center;        // Tengah vertikal  
+
+  .logo-container {
+    transition: opacity 1s ease-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    img {
+      width: 160px;           // Ukuran sesuai Figma, tidak terlalu besar
+      height: auto;
+    }
+  }
+
+  .fade-out {
+    opacity: 0;
+  }
+}

@@ -1,0 +1,46 @@
+.beranda-page {
+  .title {
+    text-align: center;
+    font-size: 22px;
+    font-weight: bold;
+    margin: 20px 0;
+    color: #2e7d32;
+  }
+
+  .accordion-wrapper {
+    margin-bottom: 24px;
+  }
+
+  ion-accordion {
+    margin-bottom: 12px;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  }
+
+  ion-item {
+    --background: #fff;
+    border-radius: 8px;
+  }
+
+  .chip-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    justify-content: center;
+    margin-top: 8px;
+
+    ion-button {
+      min-width: 80px;
+      font-size: 14px;
+    }
+  }
+
+  .btn-ambil {
+    margin-top: 20px;
+    border-radius: 20px;
+    font-weight: 600;
+    font-size: 16px;
+    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+  }
+}

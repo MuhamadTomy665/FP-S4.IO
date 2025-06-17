@@ -1,0 +1,32 @@
+<ion-header [translucent]="true">
+  <ion-toolbar>
+    <ion-title>QR Code</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content [fullscreen]="true" class="ion-padding">
+  <ion-header collapse="condense">
+    <ion-toolbar>
+      <ion-title size="large">QR Code Antrian</ion-title>
+    </ion-toolbar>
+  </ion-header>
+
+  <!-- QR tersedia -->
+  <div *ngIf="barcodeImage; else tidakAdaQRCode">
+    <h2 class="ion-text-center">Kode Antrian:</h2>
+    <h1 class="ion-text-center">{{ kode }}</h1>
+
+    <div class="ion-text-center" style="margin-top: 20px;">
+      <img
+        [src]="barcodeImage"
+        alt="QR Code"
+        style="width: 200px; height: 200px;"
+      />
+    </div>
+  </div>
+
+  <!-- QR tidak tersedia -->
+  <ng-template #tidakAdaQRCode>
+    <p class="ion-text-center">QR Code belum tersedia. Silakan buat antrian terlebih dahulu.</p>
+  </ng-template>
+</ion-content>

@@ -1,0 +1,110 @@
+import { Component, ViewChild } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
+import { IonicModule, IonAccordionGroup, ToastController } from '@ionic/angular';
+import { Router } from '@angular/router';
+import { ApiService } from '../services/api.service';
+
+@Component({
+  selector: 'app-beranda',
+  standalone: true,
+  imports: [CommonModule, FormsModule, IonicModule],
+  templateUrl: './beranda.page.html',
+  styleUrls: ['./beranda.page.scss'],
+})
+export class BerandaPage {
+  @ViewChild('accordionGroup', { static: false }) accordionGroup!: IonAccordionGroup;
+
+  poliList: string[] = ['Poli Umum', 'Poli Gigi', 'Poli Anak'];
+  timeList: string[] = ['08:00', '09:00', '10:00', '13:00', '14:00'];
+
+  selectedPoli = '';
+  selectedDate = '';
+  selectedTime = '';
+
+  constructor(
+    private toastController: ToastController,
+    private router: Router,
+    private api: ApiService
+  ) {}
+
+  onPoliSelected() {
+    if (this.selectedPoli) {
+      this.accordionGroup.value = 'tanggal';
+    }
+  }
+
+  onDateSelected() {
+    if (this.selectedDate) {
+      this.accordionGroup.value = 'jam';
+    }
+  }
+
+  private formatTanggal(dateStr: string): string {
+    const date = new Date(dateStr);
+    const year = date.getFullYear();
+    const month = String(date.getMonth() + 1).padStart(2, '0');
+    const day = String(date.getDate()).padStart(2, '0');
+    return `${year}-${month}-${day}`;
+  }
+
+  ambilAntrian() {
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
+
+    if (!this.selectedPoli || !this.selectedDate || !this.selectedTime) {
+      this.showToast('❗ Lengkapi semua data terlebih dahulu.', 'danger');
+      return;
+    }
+
+    if (!userData.id) {
+      this.showToast('❗ Pengguna belum login.', 'danger');
+      return;
+    }
+
+    const dataAntrian = {
+      pasien_id: userData.id,
+      poli: this.selectedPoli,
+      tanggal: this.formatTanggal(this.selectedDate),
+      jam: this.selectedTime,
+    };
+
+    console.log('Data antrian yang dikirim:', dataAntrian);
+
+    // ✅ GUNAKAN ENDPOINT YANG BENAR UNTUK SIMPAN ANTRIAN
+    this.api.post('/antrian', dataAntrian).subscribe({
+      next: (res: any) => {
+        this.showToast('✅ Antrian berhasil disimpan ke server!', 'success');
+
+        // Simpan data ke localStorage
+        localStorage.setItem('barcode', res.barcode);
+        localStorage.setItem('kode_antrian', res.kode);
+        localStorage.setItem('antrian', JSON.stringify(res.data));
+
+        // Arahkan ke halaman barcode
+        setTimeout(() => this.router.navigate(['/barcode']), 1000);
+      },
+      error: (err) => {
+        const pesan = err?.error?.message || '❌ Gagal menyimpan antrian!';
+        this.showToast(pesan, 'danger');
+        console.error('Error saat kirim antrian:', err);
+      },
+    });
+  }
+
+  async showToast(message: string, color: string) {
+    const toast = await this.toastController.create({
+      message,
+      duration: 1600,
+      color,
+      position: 'top'
+    });
+    await toast.present();
+  }
+
+  ionViewDidLeave() {
+    const activeEl = document.activeElement as HTMLElement;
+    if (activeEl && typeof activeEl.blur === 'function') {
+      activeEl.blur();
+    }
+  }
+}

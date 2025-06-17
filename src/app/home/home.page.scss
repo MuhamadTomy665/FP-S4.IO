@@ -1,0 +1,131 @@
+ion-content {
+  --padding-top: 12px;
+  --padding-bottom: 24px;
+}
+
+.header-container {
+  background-color: #50f87a;
+  border-radius: 16px;
+  padding: 16px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: white;
+  margin-bottom: 16px;
+
+  img {
+    width: 90px;
+  }
+
+  .text {
+    h2 {
+      font-size: 18px;
+      font-weight: bold;
+      margin: 0;
+    }
+
+    p {
+      font-size: 14px;
+      margin-top: 6px;
+    }
+  }
+}
+
+.greeting {
+  font-size: 18px;
+  font-weight: 600;
+  margin: 8px 0;
+  color: #2e7d32;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  margin-top: 12px;
+}
+
+.card {
+  padding: 20px;
+  border-radius: 14px;
+  text-align: center;
+  background-color: #f5f5f5;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+  transition: transform 0.2s ease-in-out;
+
+  &:active {
+    transform: scale(0.98);
+    opacity: 0.9;
+  }
+
+  ion-icon {
+    font-size: 32px;
+    margin-bottom: 8px;
+    color: #4CAF50;
+  }
+
+  h3 {
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  p {
+    font-size: 13px;
+    color: #666;
+    margin-top: 4px;
+  }
+}
+
+.light-blue {
+  background-color: #e3f2fd;
+}
+
+.light-yellow {
+  background-color: #fff8e1;
+}
+
+.not-found {
+  grid-column: 1 / -1;
+  text-align: center;
+  margin-top: 24px;
+  color: #888;
+
+  ion-icon {
+    font-size: 36px;
+    margin-bottom: 8px;
+    color: #ccc;
+  }
+
+  p {
+    font-size: 14px;
+  }
+}
+
+.cta-container {
+  padding: 15px;
+  display: flex;
+  justify-content: center;
+}
+
+.cta-button {
+  --background: linear-gradient(to right, #4caf50, #2e7d32);
+  --color: white;
+  font-size: 17px;
+  font-weight: bold;
+  border-radius: 12px;
+  padding: 14px 20px;
+  letter-spacing: 0.5px;
+  box-shadow: 0 4px 8px rgba(76, 175, 80, 0.3);
+  transition: transform 0.2s ease-in-out;
+}
+
+.cta-button:hover {
+  transform: scale(1.02);
+}
+
+.card {
+  transition: all 0.2s ease;
+}
+.card:hover {
+  transform: scale(1.03);
+}
