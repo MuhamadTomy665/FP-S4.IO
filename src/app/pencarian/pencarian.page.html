@@ -1,0 +1,53 @@
+<ion-content class="ion-padding pencarian-page">
+
+  <!-- 🔍 Search Input -->
+  <ion-searchbar
+    [(ngModel)]="searchTerm"
+    (ionInput)="onSearchChange()"
+    placeholder="Cari poli atau dokter"
+    debounce="300">
+  </ion-searchbar>
+
+  <!-- ⏳ Skeleton Loading -->
+  <div *ngIf="isLoading">
+    <div class="skeleton-loader"></div>
+    <div class="skeleton-loader"></div>
+    <div class="skeleton-loader"></div>
+  </div>
+
+  <!-- ✅ Results -->
+  <div *ngIf="!isLoading && (filteredPoli.length > 0 || filteredDokter.length > 0)" class="search-results">
+
+    <!-- 🏥 Poli -->
+    <div *ngIf="filteredPoli.length > 0">
+      <h3 class="section-title">Daftar Poli</h3>
+      <ion-card *ngFor="let poli of filteredPoli">
+        <ion-card-header>
+          <ion-card-title>{{ poli.nama }}</ion-card-title>
+        </ion-card-header>
+        <ion-card-content>
+          {{ poli.deskripsi }}
+        </ion-card-content>
+      </ion-card>
+    </div>
+
+    <!-- 👩‍⚕️ Dokter -->
+    <div *ngIf="filteredDokter.length > 0">
+      <h3 class="section-title">Daftar Dokter</h3>
+      <ion-card *ngFor="let dokter of filteredDokter">
+        <ion-card-header>
+          <ion-card-title>{{ dokter.nama }}</ion-card-title>
+          <ion-card-subtitle>Spesialis {{ dokter.spesialis }}</ion-card-subtitle>
+        </ion-card-header>
+      </ion-card>
+    </div>
+
+  </div>
+
+  <!-- ❌ Fallback kosong -->
+  <div *ngIf="!isLoading && filteredPoli.length === 0 && filteredDokter.length === 0 && searchTerm.trim() !== ''" class="empty">
+    <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
+    <p>Hasil pencarian tidak ditemukan</p>
+  </div>
+
+</ion-content>
