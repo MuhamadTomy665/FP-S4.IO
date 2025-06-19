@@ -77,9 +77,15 @@ export class BerandaPage implements OnInit {
       return;
     }
 
+    const selectedPoliObj = this.poliList.find(p => p.id === this.selectedPoli);
+    if (!selectedPoliObj) {
+      this.showToast('❗ Poli tidak ditemukan.', 'danger');
+      return;
+    }
+
     const dataAntrian = {
       pasien_id: userData.id,
-      poli: this.selectedPoli,
+      poli: selectedPoliObj.nama_poli, // ✅ kirim string
       tanggal: this.formatTanggal(this.selectedDate),
       jam: this.selectedTime,
     };
