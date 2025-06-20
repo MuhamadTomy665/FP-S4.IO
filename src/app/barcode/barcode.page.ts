@@ -13,6 +13,7 @@ import { ApiService } from '../services/api.service';
 export class BarcodePage implements OnInit {
   kode: string = '';
   barcodeImage: string = '';
+  antrian: any = null; // 🆕 Menyimpan data antrian lengkap, termasuk nomor_antrian
 
   constructor(private api: ApiService) {}
 
@@ -29,6 +30,7 @@ export class BarcodePage implements OnInit {
         if (res.success) {
           this.kode = res.kode;
           this.barcodeImage = res.barcode_image;
+          this.antrian = res.data; // 🆕 Menyimpan detail antrian ke komponen
         } else {
           console.warn('Antrian tidak ditemukan.');
         }

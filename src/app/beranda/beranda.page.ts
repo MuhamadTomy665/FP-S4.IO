@@ -16,11 +16,19 @@ export class BerandaPage implements OnInit {
   @ViewChild('accordionGroup', { static: false }) accordionGroup!: IonAccordionGroup;
 
   poliList: { id: number; nama_poli: string }[] = [];
-  timeList: string[] = ['08:00', '09:00', '10:00', '13:00', '14:00'];
+
+  // ✅ Jam diperluas sampai 21:00
+  timeList: string[] = [
+    '08:00', '09:00', '10:00', '11:00', '12:00',
+    '13:00', '14:00', '15:00', '16:00', '17:00',
+    '18:00', '19:00', '20:00', '21:00'
+  ];
 
   selectedPoli: number | null = null;
   selectedDate = '';
   selectedTime = '';
+
+  minDate: string = '';
 
   constructor(
     private toastController: ToastController,
@@ -30,12 +38,14 @@ export class BerandaPage implements OnInit {
 
   ngOnInit() {
     this.loadPoli();
+    const today = new Date();
+    this.minDate = today.toISOString().split('T')[0];
   }
 
   loadPoli() {
     this.api.get('/poli').subscribe({
       next: (res: any) => {
-        this.poliList = res; // ✅ Tidak pakai res.data karena API return array langsung
+        this.poliList = res;
       },
       error: (err) => {
         console.error('Gagal ambil data poli:', err);
@@ -64,11 +74,37 @@ export class BerandaPage implements OnInit {
     return `${year}-${month}-${day}`;
   }
 
+  // ✅ Cek apakah jam sudah lewat
+  isTimeDisabled(jam: string): boolean {
+    if (!this.selectedDate) return false;
+
+    const selected = new Date(this.selectedDate);
+    const now = new Date();
+
+    const isToday =
+      selected.getFullYear() === now.getFullYear() &&
+      selected.getMonth() === now.getMonth() &&
+      selected.getDate() === now.getDate();
+
+    if (!isToday) return false;
+
+    const [hour, minute] = jam.split(':').map(Number);
+    const jamDate = new Date(selected);
+    jamDate.setHours(hour, minute, 0, 0);
+
+    return jamDate.getTime() < now.getTime();
+  }
+
   ambilAntrian() {
     const userData = JSON.parse(localStorage.getItem('user') || '{}');
 
     if (!this.selectedPoli || !this.selectedDate || !this.selectedTime) {
       this.showToast('❗ Lengkapi semua data terlebih dahulu.', 'danger');
+      return;
+    }
+
+    if (new Date(this.selectedDate) < new Date(this.minDate)) {
+      this.showToast('❗ Tanggal tidak boleh sebelum hari ini.', 'danger');
       return;
     }
 
@@ -85,7 +121,7 @@ export class BerandaPage implements OnInit {
 
     const dataAntrian = {
       pasien_id: userData.id,
-      poli: selectedPoliObj.nama_poli, // ✅ kirim string
+      poli: selectedPoliObj.nama_poli,
       tanggal: this.formatTanggal(this.selectedDate),
       jam: this.selectedTime,
     };
