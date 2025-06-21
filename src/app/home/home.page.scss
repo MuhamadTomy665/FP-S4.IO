@@ -1,67 +1,74 @@
-.home-content {
-  padding: 20px;
+.home-page {
+  font-family: 'Arial', sans-serif;
 
-  .greeting-container {
+  .welcome-section {
+    text-align: center;
     margin-bottom: 20px;
-    
-    .greeting {
-      font-size: 24px;
-      font-weight: bold;
+
+    h2 {
+      font-size: 22px;
+      font-weight: 700;
       color: #2e7d32;
-      margin-bottom: 4px;
-    }
-
-    .welcome {
-      font-size: 14px;
-      color: #555;
-    }
-  }
-
-  .info-card {
-    display: flex;
-    align-items: flex-start;
-    background: #e8f5e9;
-    border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-    gap: 12px;
-
-    ion-icon {
-      font-size: 28px;
-      color: #4caf50;
-      margin-top: 4px;
-    }
-
-    h4 {
-      margin: 0;
-      font-size: 16px;
-      font-weight: 600;
     }
 
     p {
-      margin: 4px 0 0;
       font-size: 14px;
       color: #666;
     }
   }
 
-  .highlight {
-    background: #fff3e0;
-    padding: 14px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 10px;
+  .hospital-info {
+    background-color: #e8f5e9;
+    border-radius: 12px;
+    padding: 16px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
 
-    ion-icon {
-      font-size: 24px;
-      color: #fb8c00;
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      color: #50f87a;
+      margin-bottom: 10px;
     }
 
     p {
       font-size: 14px;
-      margin: 0;
       color: #444;
+      display: flex;
+      align-items: center;
+
+      ion-icon {
+        margin-right: 8px;
+        font-size: 16px;
+        color: #4caf50;
+      }
+    }
+  }
+
+  .highlight-section {
+    h3 {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #388e3c;
+    }
+
+    ul {
+      list-style: none;
+      padding: 0;
+
+      li {
+        margin-bottom: 8px;
+        padding-left: 20px;
+        position: relative;
+
+        &::before {
+          content: '●';
+          color: #000000;
+          position: absolute;
+          left: 0;
+        }
+      }
     }
   }
 }
