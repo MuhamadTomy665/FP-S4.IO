@@ -1,24 +1,25 @@
-<ion-content class="home-content">
+<ion-content class="home-page ion-padding">
 
-  <!-- Greeting -->
-  <div class="greeting-container">
-    <h2 class="greeting">Hai, {{ userName }} 👋</h2>
-    <p class="welcome">Selamat datang di <strong>Rumah Sakit Pada Sembuh</strong></p>
+  <div class="welcome-section">
+    <h2>{{ sapaan }}, {{ userName }} 👋</h2>
+    <p>Selamat datang di Aplikasi Antrian RS Pada Sembuh.</p>
+  </div>
+  
+
+  <div class="hospital-info">
+    <h3>🏥 Informasi Rumah Sakit</h3>
+    <p><ion-icon name="location-outline"></ion-icon> Jl. Kesehatan No. 10, Jakarta</p>
+    <p><ion-icon name="call-outline"></ion-icon> (021) 12345678</p>
+    <p><ion-icon name="mail-outline"></ion-icon> info&#64;padasehat.id</p>
   </div>
 
-  <!-- Info Rumah Sakit -->
-  <div class="info-card">
-    <ion-icon name="location-outline"></ion-icon>
-    <div>
-      <h4>Jl. Sehat No. 10, Jakarta</h4>
-      <p>Senin - Sabtu, 08:00 - 17:00</p>
-    </div>
-  </div>
-
-  <!-- Highlight Info -->
-  <div class="highlight">
-    <ion-icon name="information-circle-outline"></ion-icon>
-    <p>Pastikan kamu sudah mengambil antrian sebelum datang ke rumah sakit ya!</p>
+  <div class="highlight-section">
+    <h3>🩺 Layanan Unggulan</h3>
+    <ul>
+      <li>Pendaftaran Poli & Dokter</li>
+      <li>Ambil Antrian Online</li>
+      <li>Riwayat Antrian Digital</li>
+    </ul>
   </div>
 
 </ion-content>

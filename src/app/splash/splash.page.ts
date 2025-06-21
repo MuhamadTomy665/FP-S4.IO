@@ -8,24 +8,11 @@ import { Router } from '@angular/router';
   standalone: false,
 })
 export class SplashPage implements OnInit {
-  fadeOut = false;
-
   constructor(private router: Router) {}
 
   ngOnInit() {
     setTimeout(() => {
-      this.fadeOut = true;
-    }, 4000);
-
-    setTimeout(() => {
       this.router.navigate(['/login']);
-    }, 5000);
-  }
-
-  ionViewDidLeave() {
-    const activeEl = document.activeElement as HTMLElement;
-    if (activeEl && typeof activeEl.blur === 'function') {
-      activeEl.blur();
-    }
+    }, 4500); // ⏳ 2.5 detik lalu pindah ke login
   }
 }
