@@ -22,4 +22,13 @@
     <p class="kode">Kode: {{ kode }}</p>
     <p class="hint">Tunjukkan barcode ini ke petugas saat tiba</p>
   </div>
+
+  <!-- 🔔 TOAST NOTIFIKASI -->
+  <ion-toast
+    [isOpen]="toastOpen"
+    message="🔔 Anda sedang dipanggil, silakan ke ruang periksa."
+    duration="3000"
+    color="primary"
+    (didDismiss)="toastOpen = false">
+  </ion-toast>
 </ion-content>
