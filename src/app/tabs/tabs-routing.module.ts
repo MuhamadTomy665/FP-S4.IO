@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { TabsPage } from './tabs.page';
-
 const routes: Routes = [
   {
     path: '',
@@ -33,8 +32,13 @@ const routes: Routes = [
           import('../profil/profil.module').then(m => m.ProfilPageModule),
       },
       {
+        path: 'antrian',
+        loadChildren: () =>
+          import('../antrian/antrian.module').then(m => m.AntrianPageModule),
+      },
+      {
         path: '',
-        redirectTo: '/tabs/home',
+        redirectTo: 'home', // ✅ fix di sini
         pathMatch: 'full',
       },
     ],
