@@ -48,4 +48,9 @@ export class ApiService {
     const headers = new HttpHeaders().set('Authorization', `Bearer ${token}`);
     return this.http.get(`${this.apiUrl}${endpoint}`, { headers });
   }
+
+  // ✅ Tambahan: Ambil riwayat antrian berdasarkan pasien_id
+  getRiwayatAntrian(pasienId: number): Observable<any> {
+    return this.get(`/antrian/riwayat/${pasienId}`);
+  }
 }
