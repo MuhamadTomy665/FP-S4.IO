@@ -33,11 +33,14 @@
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-datetime
-          presentation="date"
-          [(ngModel)]="selectedDate"
-          [min]="minDate"
-          (ionChange)="onDateSelected()"
-        ></ion-datetime>
+  presentation="date"
+  [(ngModel)]="selectedDate"
+  [min]="minDate"
+  [isDateEnabled]="isDateAllowed"
+  (ionChange)="onDateSelected()"
+  [disabled]="!allowedDays.length"
+></ion-datetime>
+
       </div>
     </ion-accordion>
 
@@ -47,15 +50,17 @@
         <ion-label style="color: black;">Pilih Jam</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
+        <!-- Warnanya sesuai getJamButtonColor -->
+        <!-- Disable jika kuota penuh atau waktu lewat -->
         <div class="chip-wrapper">
           <ion-button
             *ngFor="let jam of timeList"
             size="small"
             shape="round"
-            [fill]="selectedTime === jam ? 'solid' : 'outline'"
-            [color]="isTimeDisabled(jam) ? 'medium' : 'success'"
+            [fill]="getJamButtonColor(jam)"
             [disabled]="isTimeDisabled(jam)"
             (click)="!isTimeDisabled(jam) && (selectedTime = jam)"
+            style="margin: 4px;"
           >
             {{ jam }}
           </ion-button>
@@ -70,7 +75,16 @@
     color="success"
     (click)="ambilAntrian()"
     class="btn-ambil"
+    [disabled]="!selectedPoli || !selectedDate || !selectedTime"
   >
     Ambil Antrian
   </ion-button>
 </ion-content>
+
+<style>
+  .chip-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+</style>
