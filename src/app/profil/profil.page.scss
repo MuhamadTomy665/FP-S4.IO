@@ -1,82 +1,96 @@
 .profil-page {
+  --padding-bottom: 90px;
+
+  .profil-container {
+    padding: 16px;
     display: flex;
     flex-direction: column;
-    align-items: center;
-  
-    .profile-pic-container {
-      margin-top: 20px;
-      margin-bottom: 24px;
-      position: relative;
-      text-align: center;
-  
-      .profile-pic {
-        width: 120px;
-        height: 120px;
-        object-fit: cover;
-        border-radius: 50%;
-        border: 3px solid #4caf50;
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-      }
-  
-      .upload-wrapper {
-        margin-top: 10px;
-  
-        .upload-label {
-          font-size: 14px;
-          color: #4caf50;
-          cursor: pointer;
-          display: inline-flex;
-          align-items: center;
-          gap: 6px;
-        }
-  
-        .upload-label ion-icon {
-          font-size: 18px;
-        }
-      }
+    gap: 24px;
+    font-family: 'Poppins', sans-serif;
+  }
+
+  /* ---------- Header ---------- */
+  .header-section {
+    text-align: center;
+
+    .foto-profil {
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid var(--ion-color-primary);
     }
-  
-    ion-list {
-      width: 100%;
-      max-width: 500px;
-  
-      ion-item {
-        border-radius: 12px;
-        margin-bottom: 12px;
-        --background: #f9f9f9;
-  
-        ion-label {
-          font-size: 14px;
-          color: #555;
-        }
-  
-        ion-input {
-          font-size: 15px;
-          padding: 8px 0;
-        }
-  
-        ion-icon {
-          font-size: 22px;
-          color: #888;
-          cursor: pointer;
-        }
-      }
+
+    .btn-upload {
+      margin-top: 6px;
+      font-size: 12px;
     }
-  
-    .password-section {
-      margin-top: 20px;
+
+    .nama {
+      font-size: 1.3rem;
+      font-weight: 600;
+      margin: 10px 0 4px;
     }
-  
-    ion-button {
-      width: 100%;
-      max-width: 500px;
-      margin-top: 16px;
-      font-weight: 600; 
-      --box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
-    }
-  
-    ion-button[color="danger"] {
-      margin-top: 32px;
+
+    .email {
+      font-size: 0.9rem;
+      color: var(--ion-color-medium);
     }
   }
-  
+
+  /* ---------- Data View Card ---------- */
+  .data-pasien ion-card {
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgb(0 0 0 / 6%);
+  }
+
+  ion-item {
+    font-size: 0.95rem;
+
+    ion-label {
+      font-weight: 500;
+      color: var(--ion-color-medium-shade);
+    }
+
+    ion-text, ion-note {
+      font-weight: 600;
+      color: var(--ion-text-color);
+    }
+  }
+
+  /* ---------- Edit Form ---------- */
+  .edit-form ion-item {
+    margin-bottom: 8px;
+
+    ion-label {
+      font-weight: 500;
+    }
+  }
+
+  /* ---------- Riwayat ---------- */
+  .riwayat-section {
+    h3 {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 6px;
+    }
+
+    ion-item {
+      --background: transparent;
+      font-size: 0.9rem;
+    }
+  }
+
+  /* -------- Dark mode -------- */
+  @media (prefers-color-scheme: dark) {
+    .header-section .email,
+    ion-label {
+      color: #c6c6c6 !important;
+    }
+
+    .data-pasien ion-card {
+      background: #1e1e1e;
+      box-shadow: none;
+    }
+  }
+}

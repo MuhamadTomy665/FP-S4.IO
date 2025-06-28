@@ -1,13 +1,4 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-buttons slot="start">
-      <ion-back-button defaultHref="/home" icon="arrow-back" text=""></ion-back-button>
-    </ion-buttons>
-    <ion-title>Ambil Antrian</ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content class="ion-padding beranda-page">
+<ion-content class="ion-padding beranda-page" fullscreen="true">
   <h2 class="title">Pendaftaran Antrian</h2>
 
   <ion-accordion-group #accordionGroup value="poli" class="accordion-wrapper">
@@ -33,14 +24,13 @@
       </ion-item>
       <div class="ion-padding" slot="content">
         <ion-datetime
-  presentation="date"
-  [(ngModel)]="selectedDate"
-  [min]="minDate"
-  [isDateEnabled]="isDateAllowed"
-  (ionChange)="onDateSelected()"
-  [disabled]="!allowedDays.length"
-></ion-datetime>
-
+          presentation="date"
+          [(ngModel)]="selectedDate"
+          [min]="minDate"
+          [isDateEnabled]="isDateAllowed"
+          (ionChange)="onDateSelected()"
+          [disabled]="!allowedDays.length"
+        ></ion-datetime>
       </div>
     </ion-accordion>
 
@@ -50,8 +40,6 @@
         <ion-label style="color: black;">Pilih Jam</ion-label>
       </ion-item>
       <div class="ion-padding" slot="content">
-        <!-- Warnanya sesuai getJamButtonColor -->
-        <!-- Disable jika kuota penuh atau waktu lewat -->
         <div class="chip-wrapper">
           <ion-button
             *ngFor="let jam of timeList"

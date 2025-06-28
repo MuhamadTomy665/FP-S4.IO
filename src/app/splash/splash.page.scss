@@ -1,40 +1,47 @@
-.splash-page {
+.splash-screen {
+  --background: #00796bfa;
+  --padding-top: 0;
+  --padding-bottom: 0;
+
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh !important;
+  padding: 0 !important;
 
-  .splash-wrapper {
+  .logo-wrapper {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
+    align-items: center;
+    height: 100%;
+    width: 100%;
 
-    text-align: center;
-    animation: fadeIn 1s ease-in-out;
-
-    .logo-anim {
-      width: 120px;
-      height: auto;
-      margin-bottom: 20px;
+    .logo {
+      width: 35vw;
+      max-width: 160px;
+      min-width: 100px;
       animation: zoomIn 0.8s ease-out;
     }
 
-    .fade-text {
-      font-size: 20px;
+    .judul {
+      font-size: 18px;
       font-weight: 600;
-      color: #2e7d32;
-      margin-bottom: 18px;
+      color: #000;
+      margin-top: 16px;
       animation: slideUp 1s ease-out forwards;
       opacity: 0;
-      animation-delay: 0.6s;
+      animation-delay: 0.5s;
     }
 
     .spinner {
-      --color: #4caf50;
+      --color: #000;
+      margin-top: 10px;
     }
   }
 }
 
+// Animasi
 @keyframes zoomIn {
   from {
     transform: scale(0.7);
@@ -53,15 +60,6 @@
   }
   to {
     transform: translateY(0);
-    opacity: 1;
-  }
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-  }
-  to {
     opacity: 1;
   }
 }

@@ -2,7 +2,7 @@
   <div class="login-container">
     <img src="assets/logo-rs.png" alt="Logo" class="logo" />
 
-    <h2 class="title">Selamat Datang</h2>
+    <h2 class="title">PadaSehat Medical Care</h2>
     <p class="subtitle">Silahkan login untuk melanjutkan</p>
 
     <form (ngSubmit)="onLogin()">
@@ -38,6 +38,11 @@
       <ion-button expand="block" color="success" shape="round" type="submit" class="login-btn">
         Login
       </ion-button>
+
+      <!-- ✅ Tambahan: Link lupa password -->
+      <div class="forgot-password-link">
+        <a (click)="goToForgotPassword()">Lupa Password?</a>
+      </div>
 
     </form>
 

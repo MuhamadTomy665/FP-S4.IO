@@ -1,2 +1,45 @@
-// For information on how to create your own theme, please see:
-// http://ionicframework.com/docs/theming/
+:root {
+  /* WARNA UTAMA */
+  --color-primary: #121212;
+  --color-surface: #ffffff;
+  --color-bg: #00796bfa;
+
+  /* TEKS & IKON */
+  --color-text-primary: #121212;
+  --color-text-muted: #121212;
+  --color-icon: #00796bfa;
+
+  /* SHADOW */
+  --box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+
+  /* IONIC BACKGROUND */
+  --ion-background-color: var(--color-bg);
+
+  /* FONT */
+  --font-family-main: 'Poppins', sans-serif;
+
+  transition: all 0.3s ease;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --color-primary: #50f87a;
+    --color-surface: #1e1e1e;
+    --color-bg: #121212;
+
+    --color-text-primary: #ffffff;
+    --color-text-muted: #555555;
+    --color-icon: #50f87a;
+
+    --box-shadow: 0 2px 8px rgba(255, 255, 255, 0.08);
+
+    --ion-background-color: var(--color-bg);
+  }
+}
+
+/* Font global */
+body, ion-content, ion-label,
+h1, h2, h3, h4, h5, h6,
+p, span, button, input {
+  font-family: var(--font-family-main);
+}

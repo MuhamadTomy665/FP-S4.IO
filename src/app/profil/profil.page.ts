@@ -1,12 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { ToastController } from '@ionic/angular';
 import { Router } from '@angular/router';
-import {
-  trigger,
-  transition,
-  style,
-  animate
-} from '@angular/animations';
+import { trigger, transition, style, animate } from '@angular/animations';
+import { ApiService } from '../services/api.service'; // pastikan ada file ini
 
 @Component({
   selector: 'app-profil',
@@ -17,7 +12,7 @@ import {
     trigger('fadeSlide', [
       transition(':enter', [
         style({ opacity: 0, transform: 'translateY(10px)' }),
-        animate('250ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
+        animate('300ms ease-out', style({ opacity: 1, transform: 'translateY(0)' }))
       ]),
       transition(':leave', [
         animate('200ms ease-in', style({ opacity: 0, transform: 'translateY(10px)' }))
@@ -28,48 +23,26 @@ import {
 export class ProfilPage implements OnInit {
   nama = '';
   nik = '';
-  noHp = '';
-  foto: string | null = '';
-
-  editing = false;
-
-  // Password section
-  passwordLama = '';
-  passwordBaru = '';
-  konfirmasiPassword = '';
-  showPasswordLama = false;
-  showPasswordBaru = false;
-  showPasswordKonfirmasi = false;
+  foto: string | null = null;
+  defaultFoto = 'assets/default-profile.png';
 
   constructor(
-    private toastController: ToastController,
-    private router: Router
+    private router: Router,
+    private api: ApiService // service untuk HTTP request
   ) {}
 
   ngOnInit() {
-    const data = JSON.parse(localStorage.getItem('userData') || '{}');
-    this.nama = data.name || '';
-    this.nik = data.nik || '';
-    this.noHp = data.no_hp || '';
-    this.foto = data.foto || null;
-  }
-
-  toggleEdit() {
-    this.editing = !this.editing;
-  }
-
-  simpanPerubahan() {
-    const data = {
-      name: this.nama,
-      nik: this.nik,
-      no_hp: this.noHp,
-      password: JSON.parse(localStorage.getItem('userData') || '{}').password,
-      foto: this.foto
-    };
-
-    localStorage.setItem('userData', JSON.stringify(data));
-    this.showToast('Perubahan disimpan.', 'success');
-    this.editing = false;
+    this.api.getWithAuth('/user').subscribe({
+      next: (user: any) => {
+        this.nama = user.name || '';
+        this.nik = user.nik || '';
+        this.foto = user.foto || null;
+      },
+      error: (err) => {
+        console.error('Gagal ambil data user:', err);
+        this.router.navigate(['/login']);
+      }
+    });
   }
 
   onFotoSelected(event: any) {
@@ -83,52 +56,16 @@ export class ProfilPage implements OnInit {
     }
   }
 
-  gantiPassword() {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
-
-    if (!this.passwordLama || !this.passwordBaru || !this.konfirmasiPassword) {
-      this.showToast('Semua kolom harus diisi.', 'danger');
-      return;
-    }
-
-    if (this.passwordLama !== userData.password) {
-      this.showToast('Password lama salah.', 'danger');
-      return;
-    }
-
-    if (this.passwordBaru !== this.konfirmasiPassword) {
-      this.showToast('Password baru dan konfirmasi tidak cocok.', 'danger');
-      return;
-    }
-
-    if (this.passwordBaru.length < 6) {
-      this.showToast('Password baru minimal 6 karakter.', 'danger');
-      return;
-    }
-
-    userData.password = this.passwordBaru;
-    localStorage.setItem('userData', JSON.stringify(userData));
-
-    this.passwordLama = '';
-    this.passwordBaru = '';
-    this.konfirmasiPassword = '';
-
-    this.showToast('Password berhasil diubah.', 'success');
-  }
-
   logout() {
-    localStorage.removeItem('userData');
-    this.router.navigate(['/login']);
-    this.showToast('Berhasil logout.', 'success');
-  }
-
-  async showToast(message: string, color: string) {
-    const toast = await this.toastController.create({
-      message,
-      duration: 2000,
-      color,
-      position: 'top',
+    this.api.postWithAuth('/logout', {}).subscribe({
+      next: () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      },
+      error: () => {
+        localStorage.removeItem('token');
+        this.router.navigate(['/login']);
+      }
     });
-    toast.present();
   }
 }

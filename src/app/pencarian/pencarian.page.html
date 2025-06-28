@@ -1,6 +1,6 @@
 <ion-content class="ion-padding pencarian-page">
 
-  <!-- 🔍 Search Input -->
+  <!-- 🔍 Input Pencarian -->
   <ion-searchbar
     [(ngModel)]="searchTerm"
     (ionInput)="onSearchChange()"
@@ -15,10 +15,10 @@
     <div class="skeleton-loader"></div>
   </div>
 
-  <!-- ✅ Results -->
+  <!-- ✅ Hasil Pencarian -->
   <div *ngIf="!isLoading && (filteredPoli.length > 0 || filteredDokter.length > 0)" class="search-results">
 
-    <!-- 🏥 Poli -->
+    <!-- 🏥 Hasil Poli -->
     <div *ngIf="filteredPoli.length > 0">
       <h3 class="section-title">Daftar Poli</h3>
       <ion-card *ngFor="let poli of filteredPoli">
@@ -26,12 +26,16 @@
           <ion-card-title>{{ poli.nama }}</ion-card-title>
         </ion-card-header>
         <ion-card-content>
-          {{ poli.deskripsi }}
+          <p *ngIf="poli.dokter"><strong>Dokter:</strong> {{ poli.dokter }}</p>
+          <p *ngIf="poli.hari"><strong>Hari:</strong> {{ poli.hari }}</p>
+          <p *ngIf="poli.jam_mulai && poli.jam_selesai">
+            <strong>Jam:</strong> {{ poli.jam_mulai }} - {{ poli.jam_selesai }}
+          </p>
         </ion-card-content>
       </ion-card>
     </div>
 
-    <!-- 👩‍⚕️ Dokter -->
+    <!-- 👩‍⚕️ Hasil Dokter -->
     <div *ngIf="filteredDokter.length > 0">
       <h3 class="section-title">Daftar Dokter</h3>
       <ion-card *ngFor="let dokter of filteredDokter">
@@ -39,12 +43,15 @@
           <ion-card-title>{{ dokter.nama }}</ion-card-title>
           <ion-card-subtitle>Spesialis {{ dokter.spesialis }}</ion-card-subtitle>
         </ion-card-header>
+        <ion-card-content *ngIf="dokter.jadwal">
+          <p><strong>Jadwal:</strong> {{ dokter.jadwal }}</p>
+        </ion-card-content>
       </ion-card>
     </div>
 
   </div>
 
-  <!-- ❌ Fallback kosong -->
+  <!-- ❌ Tidak Ada Hasil -->
   <div *ngIf="!isLoading && filteredPoli.length === 0 && filteredDokter.length === 0 && searchTerm.trim() !== ''" class="empty">
     <ion-icon name="search-outline" size="large" color="medium"></ion-icon>
     <p>Hasil pencarian tidak ditemukan</p>

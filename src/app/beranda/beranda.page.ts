@@ -17,7 +17,6 @@ export class BerandaPage implements OnInit {
   @ViewChild('accordionGroup', { static: false }) accordionGroup!: IonAccordionGroup;
 
   poliList: { id: number; nama_poli: string; hari: string; jam_mulai: string; jam_selesai: string }[] = [];
-
   timeList: string[] = [];
 
   selectedPoli: number | null = null;
@@ -77,7 +76,7 @@ export class BerandaPage implements OnInit {
   onPoliSelected() {
     const selected = this.poliList.find(p => p.id === this.selectedPoli);
     if (selected) {
-      this.allowedDays = this.expandHariRange(selected.hari); // 👈 perubahan disini
+      this.allowedDays = this.expandHariRange(selected.hari);
       this.jamMulai = selected.jam_mulai;
       this.jamSelesai = selected.jam_selesai;
       this.generateTimeList();
@@ -96,7 +95,6 @@ export class BerandaPage implements OnInit {
         const [start, end] = part.split('-').map(h => h.trim());
         const startIndex = days.indexOf(start);
         const endIndex = days.indexOf(end);
-
         if (startIndex !== -1 && endIndex !== -1 && startIndex <= endIndex) {
           for (let i = startIndex; i <= endIndex; i++) {
             result.push(days[i]);
@@ -131,6 +129,10 @@ export class BerandaPage implements OnInit {
       next: (res: any) => {
         if (res.success) {
           this.kuotaPerJamList = res.data || [];
+
+          // ✅ LOG UNTUK DEBUG
+          console.log('Kuota per jam dari API:', this.kuotaPerJamList);
+
         } else {
           this.kuotaPerJamList = [];
           this.showToast('Gagal mengambil data kuota.', 'danger');
@@ -167,23 +169,21 @@ export class BerandaPage implements OnInit {
       return;
     }
 
-    const [startHour, startMin] = this.jamMulai.split(':').map(Number);
-    const [endHour, endMin] = this.jamSelesai.split(':').map(Number);
-
-    const start = new Date();
-    start.setHours(startHour, startMin, 0, 0);
-
-    const end = new Date();
-    end.setHours(endHour, endMin, 0, 0);
+    const [startHour] = this.jamMulai.split(':').map(Number);
+    const [endHour] = this.jamSelesai.split(':').map(Number);
 
     const list: string[] = [];
 
-    while (start <= end) {
-      list.push(start.toTimeString().slice(0, 5));
-      start.setMinutes(start.getMinutes() + 60);
+    for (let hour = startHour; hour <= endHour; hour++) {
+      list.push(`${hour.toString().padStart(2, '0')}:00`);
     }
 
     this.timeList = list;
+  }
+
+  formatJam(jam: string): string {
+    const [h, m] = jam.split(':').map(Number);
+    return `${String(h).padStart(2, '0')}:${String(m).padStart(2, '0')}`;
   }
 
   isTimeDisabled(jam: string): boolean {
@@ -201,22 +201,19 @@ export class BerandaPage implements OnInit {
       const [hour, minute] = jam.split(':').map(Number);
       const jamDate = new Date(selected);
       jamDate.setHours(hour, minute, 0, 0);
-
-      if (jamDate.getTime() < now.getTime()) {
-        return true;
-      }
+      if (jamDate.getTime() < now.getTime()) return true;
     }
 
-    const kuotaJam = this.kuotaPerJamList.find(k => k.jam === jam);
+    const kuotaJam = this.kuotaPerJamList.find(k => this.formatJam(k.jam) === this.formatJam(jam));
     if (kuotaJam && kuotaJam.penuh) return true;
 
     return false;
   }
 
   getJamButtonColor(jam: string): string {
-    const kuotaJam = this.kuotaPerJamList.find(k => k.jam === jam);
-    if (kuotaJam && kuotaJam.penuh) return 'danger';
-    if (this.selectedTime === jam) return 'success';
+    const kuotaJam = this.kuotaPerJamList.find(k => this.formatJam(k.jam) === this.formatJam(jam));
+    if (kuotaJam?.penuh) return 'danger';
+    if (this.formatJam(this.selectedTime) === this.formatJam(jam)) return 'success';
     return 'outline';
   }
 

@@ -16,7 +16,7 @@ export class HomePage implements OnInit {
   constructor(private toastController: ToastController) {}
 
   ngOnInit() {
-    const userData = JSON.parse(localStorage.getItem('userData') || '{}');
+    const userData = JSON.parse(localStorage.getItem('user') || '{}');
     this.userName = userData?.name || 'Pasien';
 
     const hour = new Date().getHours();
@@ -30,11 +30,9 @@ export class HomePage implements OnInit {
   listenToPanggilan(pasienId: number) {
     if (!pasienId) return;
 
-    // Set global Pusher
     // @ts-ignore
     window.Pusher = Pusher;
 
-    // Inisialisasi Echo
     // @ts-ignore
     window.Echo = new Echo({
       broadcaster: 'pusher',
@@ -43,7 +41,6 @@ export class HomePage implements OnInit {
       forceTLS: true,
     });
 
-    // Dengarkan event pemanggilan
     window.Echo.channel('antrian')
       .listen('PanggilAntrianEvent', async (e: any) => {
         if (e.antrian && e.antrian.pasien_id === pasienId) {
@@ -62,3 +59,4 @@ export class HomePage implements OnInit {
     await toast.present();
   }
 }
+
