@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from '../services/api.service';
+import { NavController } from '@ionic/angular';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ export class LoginPage implements OnInit {
   errorMessage = '';
   successMessage = '';
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private navCtrl: NavController
+  ) {}
 
   ngOnInit() {}
 
@@ -27,34 +32,47 @@ export class LoginPage implements OnInit {
   }
 
   onLogin() {
-    if (!this.nik || !this.password) {
+    const nikTrimmed = this.nik.trim();
+    const passwordTrimmed = this.password.trim();
+
+    if (!nikTrimmed || !passwordTrimmed) {
       this.errorMessage = 'NIK dan password wajib diisi.';
       this.successMessage = '';
       return;
     }
 
     const loginData = {
-      nik: this.nik,
-      password: this.password,
+      nik: nikTrimmed,
+      password: passwordTrimmed,
     };
+
+    console.log('Kirim data login:', loginData); // ✅ Debug
 
     this.api.post('/login', loginData).subscribe({
       next: (res: any) => {
-        // Tidak perlu cek role jika tidak ada
+        console.log('Login berhasil:', res); // ✅ Debug
+
         this.successMessage = 'Login berhasil!';
         this.errorMessage = '';
 
         localStorage.setItem('auth_token', res.token);
-        localStorage.setItem('user', JSON.stringify(res.data)); // bukan res.user
+        localStorage.setItem('userData', JSON.stringify(res.data));
 
-        setTimeout(() => {
-          this.router.navigate(['/tabs']);
-        }, 300);
+        this.navCtrl.navigateRoot('/tabs/home', {
+          animated: true,
+          animationDirection: 'forward',
+        });
       },
       error: (err) => {
-        this.errorMessage = err.error.message || 'Login gagal';
+        console.error('Login error:', err); // ✅ Debug
+
+        this.errorMessage = err?.error?.message || 'Login gagal. Periksa kembali NIK dan password Anda.';
         this.successMessage = '';
       },
     });
+  }
+
+  goToForgotPassword() {
+    this.router.navigate(['/forgot-password']);
   }
 }

@@ -1,74 +1,136 @@
 .home-page {
+  background-color: var(--color-bg);
+  color: var(--color-text-primary);
   font-family: 'Arial', sans-serif;
+  min-height: 100vh;
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+
+  animation: fadeInPage 0.6s ease-in; // 🔥 Tambahan animasi utama
 
   .welcome-section {
     text-align: center;
-    margin-bottom: 20px;
+    animation: fadeSlideDown 0.6s ease-in-out; // 🔥 Slide dari atas
 
     h2 {
-      font-size: 22px;
+      font-size: clamp(1.3rem, 5vw, 1.8rem);
       font-weight: 700;
-      color: #2e7d32;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
     }
 
     p {
-      font-size: 14px;
-      color: #666;
+      font-size: 1rem;
+      color: var(--color-text-muted);
     }
   }
 
   .hospital-info {
-    background-color: #e8f5e9;
+    background-color: var(--color-surface);
     border-radius: 12px;
-    padding: 16px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    padding: 1rem;
+    box-shadow: var(--box-shadow);
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    animation: fadeSlideUp 0.6s ease-in-out; // 🔥 Slide dari bawah
 
     h3 {
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: bold;
-      color: #50f87a;
-      margin-bottom: 10px;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
     }
 
     p {
-      font-size: 14px;
-      color: #444;
+      font-size: 0.95rem;
+      color: var(--color-text-primary);
       display: flex;
       align-items: center;
+      gap: 0.5rem;
 
       ion-icon {
-        margin-right: 8px;
-        font-size: 16px;
-        color: #4caf50;
+        font-size: 1.1rem;
+        color: var(--color-icon);
       }
     }
   }
 
   .highlight-section {
+    animation: fadeSlideUp 0.6s ease-in-out; // 🔥 Sama seperti di atas
+
     h3 {
-      font-size: 16px;
+      font-size: 1rem;
       font-weight: bold;
-      margin-bottom: 10px;
-      color: #388e3c;
+      color: var(--color-primary);
+      margin-bottom: 0.5rem;
     }
 
     ul {
       list-style: none;
       padding: 0;
+      margin: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
 
       li {
-        margin-bottom: 8px;
-        padding-left: 20px;
+        font-size: 0.95rem;
+        color: var(--color-text-primary);
+        padding-left: 1.5rem;
         position: relative;
 
         &::before {
-          content: '●';
-          color: #000000;
+          content: '✔';
           position: absolute;
           left: 0;
+          color: var(--color-primary);
         }
       }
     }
+  }
+
+  @media (min-width: 768px) {
+    .hospital-info,
+    .highlight-section {
+      max-width: 600px;
+      margin: 0 auto;
+    }
+  }
+}
+
+/* 🔥 Keyframe animations */
+@keyframes fadeInPage {
+  0% {
+    opacity: 0;
+    transform: scale(0.98);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes fadeSlideDown {
+  0% {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeSlideUp {
+  0% {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
   }
 }

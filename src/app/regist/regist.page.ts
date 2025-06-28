@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-import { IonicModule } from '@ionic/angular';
+import { IonicModule, LoadingController, ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 import { ApiService } from '../services/api.service';
 
@@ -19,11 +19,15 @@ export class RegistPage implements OnInit {
   password = '';
   showPassword = false;
 
-  successMessage = '';
-  errorMessage = '';
-  isLoading = false;
+  isLoading: boolean = false; // ⬅️ Tambahkan ini
 
-  constructor(private router: Router, private api: ApiService) {}
+  constructor(
+    private router: Router,
+    private api: ApiService,
+    private loader: LoadingController,
+    private toast: ToastController
+  ) {}
+
 
   ngOnInit() {}
 
@@ -34,49 +38,51 @@ export class RegistPage implements OnInit {
     }
   }
 
-  onSubmit() {
-    const name = this.name.trim();
-    const nik = this.nik.trim();
-    const no_hp = this.no_hp.trim();
-    const password = this.password;
+  async onSubmit() {
+    const payload = {
+      name: this.name.trim(),
+      nik: this.nik.trim(),
+      no_hp: this.no_hp.trim(),
+      password: this.password.trim(),
+    };
 
-    // Validasi kosong
-    if (!name || !nik || !no_hp || !password) {
-      this.errorMessage = 'Isi semua data dengan benar.';
-      this.successMessage = '';
-      return;
+    // Validasi input
+    if (!payload.name || !payload.nik || !payload.no_hp || !payload.password) {
+      return this.showToast('Isi semua data dengan benar.', 'danger');
     }
 
-    // Validasi password
-    if (password.length < 6) {
-      this.errorMessage = 'Password kurang dari 6 karakter.';
-      this.successMessage = '';
-      return;
+    if (payload.nik.length !== 16 || !/^\d{16}$/.test(payload.nik)) {
+      return this.showToast('NIK harus terdiri dari 16 digit angka.', 'danger');
     }
 
-    // Validasi NIK
-    if (nik.length < 16) {
-      this.errorMessage = 'NIK tidak valid.';
-      this.successMessage = '';
-      return;
+    if (payload.password.length < 6) {
+      return this.showToast('Password minimal 6 karakter.', 'danger');
     }
 
-    const newUser = { name, nik, no_hp, password };
+    const loading = await this.loader.create({ message: 'Mendaftarkan akun...' });
+    await loading.present();
 
-    this.isLoading = true;
-
-    this.api.register(newUser).subscribe({
-      next: (res) => {
-        this.isLoading = false;
-        this.successMessage = 'Registrasi berhasil!';
-        this.errorMessage = '';
+    this.api.register(payload).subscribe({
+      next: async () => {
+        await loading.dismiss();
+        this.showToast('Registrasi berhasil! Silakan login.', 'success');
         this.router.navigate(['/login']);
       },
-      error: (err) => {
-        this.isLoading = false;
-        this.errorMessage = err.error?.message || 'Terjadi kesalahan saat registrasi.';
-        this.successMessage = '';
-      }
+      error: async (err) => {
+        await loading.dismiss();
+        const msg = err?.error?.message || 'Terjadi kesalahan saat registrasi.';
+        this.showToast(msg, 'danger');
+      },
     });
+  }
+
+  private async showToast(message: string, color: 'success' | 'danger') {
+    const toast = await this.toast.create({
+      message,
+      duration: 2000,
+      color,
+      position: 'top',
+    });
+    await toast.present();
   }
 }

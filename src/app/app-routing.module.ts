@@ -41,17 +41,20 @@ const routes: Routes = [
   },
   {
     path: 'tabs',
-    loadChildren: () => import('./tabs/tabs.module').then( m => m.TabsPageModule)
+    loadChildren: () => import('./tabs/tabs.module').then(m => m.TabsPageModule)
   },
   {
     path: 'pencarian',
-    loadChildren: () => import('./pencarian/pencarian.module').then( m => m.PencarianPageModule)
+    loadChildren: () => import('./pencarian/pencarian.module').then(m => m.PencarianPageModule)
   },
   {
     path: 'profil',
-    loadChildren: () => import('./profil/profil.module').then( m => m.ProfilPageModule)
+    loadChildren: () => import('./profil/profil.module').then(m => m.ProfilPageModule)
+  },
+  {
+    path: 'forgot-password',
+    loadComponent: () => import('./forgot-password/forgot-password.page').then(m => m.ForgotPasswordPage)
   }
-
 ];
 
 @NgModule({

@@ -1,46 +1,217 @@
+:host {
+  display: block;
+  height: 100%;
+}
+
 .beranda-page {
+  background: linear-gradient(135deg, #50f87a 0%, #c7fdd9 100%);
+  min-height: 100%;
+  padding: 1rem;
+  padding-bottom: calc(88px + env(safe-area-inset-bottom));
+  font-family: 'Poppins', sans-serif;
+  animation: fadeInPage 0.6s ease-in;
+
   .title {
     text-align: center;
-    font-size: 22px;
-    font-weight: bold;
-    margin: 20px 0;
-    color: #2e7d32;
+    font-size: clamp(20px, 4vw, 28px);
+    font-weight: 700;
+    color: #0c2717;
+    margin-bottom: 1.5rem;
+    animation: fadeSlideDown 0.6s ease-in-out;
   }
 
   .accordion-wrapper {
-    margin-bottom: 24px;
+    background-color: rgba(255, 255, 255, 0.2);
+    border-radius: 16px;
+    padding: 1rem;
+    backdrop-filter: blur(12px);
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+    animation: fadeSlideUp 0.6s ease-in-out;
   }
 
   ion-accordion {
-    margin-bottom: 12px;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    background: transparent;
+    margin-bottom: 1rem;
+    border-radius: 12px;
+    --background: transparent;
+
+    ion-item {
+      --background: rgba(255, 255, 255, 0.9);
+      --color: #0c2717;
+      font-weight: 600;
+      border-radius: 10px;
+      margin-bottom: 6px;
+      font-size: clamp(14px, 3.5vw, 16px);
+    }
+
+    ion-label {
+      color: #0c2717;
+      font-weight: 600;
+      font-size: clamp(13px, 3.2vw, 15px);
+    }
+
+    ion-radio-group ion-item {
+      background: #e6f9ee;
+      --background: #e6f9ee;
+      border-radius: 8px;
+      margin-bottom: 6px;
+      padding: 10px 12px;
+      --color: #0c2717;
+      transition: background 0.3s ease;
+
+      &:hover {
+        background: #d3f6df;
+      }
+    }
+
+    ion-radio {
+      --color-checked: var(--color-primary);
+    }
   }
 
-  ion-item {
-    --background: #fff;
-    border-radius: 8px;
+  ion-datetime {
+    background: #ffffff;
+    --background: #ffffff;
+    --ion-text-color: #0c2717;
+    border-radius: 12px;
+    padding: 12px;
+    font-size: clamp(13px, 3vw, 15px);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    animation: fadeIn 0.4s ease-in-out;
   }
 
   .chip-wrapper {
     display: flex;
     flex-wrap: wrap;
-    gap: 10px;
     justify-content: center;
-    margin-top: 8px;
+    gap: 10px;
 
     ion-button {
-      min-width: 80px;
-      font-size: 14px;
+      --background: #e6f9ee;
+      --color: #0c2717;
+      border-radius: 18px;
+      padding: 4px 12px;
+      font-size: clamp(13px, 3vw, 15px);
+      font-weight: 500;
+      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.08);
+      transition: transform 0.2s ease, background 0.3s ease;
+
+      &:hover {
+        transform: scale(1.05);
+      }
+
+      &.selected {
+        --background: var(--color-primary);
+        --color: white;
+      }
     }
   }
 
   .btn-ambil {
-    margin-top: 20px;
-    border-radius: 20px;
+    margin-top: 28px;
+    margin-bottom: calc(72px + env(safe-area-inset-bottom)); // <== ini penting agar tidak tertutup
+    --background: #ffffff;
+    --color: #270e0c;
     font-weight: 600;
-    font-size: 16px;
-    box-shadow: 0 4px 8px rgba(0, 128, 0, 0.2);
+    font-size: clamp(15px, 4vw, 17px);
+    border-radius: 25px;
+    padding: 12px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+    transition: all 0.3s ease;
+
+    &:hover {
+      filter: brightness(0.95);
+    }
+
+    &:disabled {
+      opacity: 0.6;
+      --background: #cccccc;
+      --color: #666666;
+    }
+  }
+
+  @keyframes fadeInPage {
+    0% {
+      opacity: 0;
+      transform: scale(0.98);
+    }
+    100% {
+      opacity: 1;
+      transform: scale(1);
+    }
+  }
+
+  @keyframes fadeSlideDown {
+    0% {
+      opacity: 0;
+      transform: translateY(-10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeSlideUp {
+    0% {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+}
+
+// 🌙 DARK MODE
+@media (prefers-color-scheme: dark) {
+  .beranda-page {
+    background: linear-gradient(135deg, #1b3e2f 0%, #3f5e52 100%);
+
+    .title,
+    ion-label,
+    ion-item,
+    ion-datetime,
+    .chip-wrapper ion-button,
+    .btn-ambil {
+      --color: #ffffff;
+      color: #ffffff;
+    }
+
+    ion-datetime {
+      background: #222;
+      --background: #222;
+      --ion-text-color: #ffffff;
+    }
+
+    .accordion-wrapper {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    ion-radio-group ion-item {
+      background: #2d4c3b;
+      --background: #2d4c3b;
+      --color: #ffffff;
+    }
+
+    .chip-wrapper ion-button {
+      --background: #355b45;
+      --color: #ffffff;
+
+      &.selected {
+        --background: var(--color-primary);
+        --color: #000000;
+      }
+    }
   }
 }

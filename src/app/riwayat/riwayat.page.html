@@ -1,26 +1,39 @@
 <ion-content class="ion-padding riwayat-page">
-
   <h2 class="title">Riwayat Antrian</h2>
 
   <ion-list *ngIf="riwayatList.length > 0" class="animated-list">
-    <ion-item *ngFor="let item of riwayatList">
+    <ion-item
+      *ngFor="let item of riwayatList"
+      [class.selected]="selectedItem === item"
+      (click)="selectItem(item)"
+    >
       <ion-icon name="document-text-outline" slot="start" color="primary"></ion-icon>
 
       <ion-label>
         <h3>{{ item.poli }}</h3>
         <p>{{ item.tanggal }} - {{ item.jam }}</p>
-
-        <!-- ✅ Tampilkan Nomor Antrian -->
         <p><strong>Nomor Antrian:</strong> {{ item.nomor_antrian }}</p>
-
         <small>Status: {{ item.status | titlecase }}</small><br />
-        <small *ngIf="item.waktuAmbil">Diambil: {{ item.waktuAmbil | date:'short' }}</small>
+        <small *ngIf="item.waktuAmbil">
+          Diambil: {{ item.waktuAmbil | date:'short' }}
+        </small>
       </ion-label>
 
-      <div slot="end" style="display: flex; align-items: center; gap: 8px;">
+      <div slot="end" class="badge-wrapper">
         <ion-button fill="clear" size="small" (click)="lihatQR(item)">
           <ion-icon name="qr-code-outline" slot="icon-only"></ion-icon>
         </ion-button>
+
+        <ion-button
+          fill="clear"
+          size="small"
+          color="danger"
+          (click)="batalkanAntrian(item, $event)"
+          *ngIf="item.status?.toLowerCase() === 'antri'"
+        >
+          <ion-icon name="close-circle-outline" slot="icon-only"></ion-icon>
+        </ion-button>
+
         <ion-badge [color]="getBadgeColor(item.status)">
           {{ item.status | titlecase }}
         </ion-badge>
@@ -33,21 +46,50 @@
     <p>Belum ada riwayat antrian</p>
   </div>
 
-  <!-- ✅ Modal QR Code -->
-  <ion-modal [isOpen]="showModal" (didDismiss)="showModal = false">
-    <ng-template>
-      <ion-header>
-        <ion-toolbar>
-          <ion-title>QR Code Antrian</ion-title>
-          <ion-buttons slot="end">
-            <ion-button (click)="showModal = false">Tutup</ion-button>
-          </ion-buttons>
-        </ion-toolbar>
-      </ion-header>
-      <ion-content class="ion-padding" style="text-align: center;">
-        <img [src]="selectedQR" alt="QR Code" style="width: 250px; height: 250px;" />
-      </ion-content>
-    </ng-template>
+  <!-- ✅ Modal QR dengan fix nomor antrian -->
+  <ion-modal [isOpen]="showModal" (didDismiss)="closeModal()">
+    <ion-header>
+      <ion-toolbar>
+        <ion-title>QR Code Antrian</ion-title>
+        <ion-buttons slot="end">
+          <ion-button (click)="closeModal()">Tutup</ion-button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content class="ion-padding qr-modal-content">
+      <ng-container *ngIf="qrNomorAntrian; else noQR">
+        <div class="qr-container">
+          <h3 class="judul">Nomor Antrian Anda</h3>
+          <p class="kode-antrian">{{ qrNomorAntrian }}</p>
+
+          <!-- ✅ QR stabil, tidak loncat -->
+          <img
+            class="qr-image"
+            [src]="selectedQR"
+            [style.visibility]="selectedQR ? 'visible' : 'hidden'"
+            alt="QR Code"
+          />
+
+          <p class="info-text">Tunjukkan QR ini saat check-in di lokasi</p>
+
+          <ion-button expand="block" color="medium" (click)="closeModal()">
+            Tutup QR
+          </ion-button>
+        </div>
+      </ng-container>
+
+      <ng-template #noQR>
+        <div class="qr-container">
+          <p class="ion-text-center">QR tidak tersedia.</p>
+          <ion-button expand="block" color="medium" (click)="closeModal()">
+            Tutup
+          </ion-button>
+        </div>
+      </ng-template>
+    </ion-content>
   </ion-modal>
 
+  <!-- Spacer agar tidak tertutup tab bar -->
+  <div style="height: 100px;"></div>
 </ion-content>

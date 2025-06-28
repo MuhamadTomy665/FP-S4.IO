@@ -54,3 +54,5 @@ export class ApiService {
     return this.get(`/antrian/riwayat/${pasienId}`);
   }
 }
+
+
